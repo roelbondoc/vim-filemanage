@@ -5,11 +5,11 @@
 
 
 let s:max_buff_height = 30
-let g:project_dir = expand("%:p:h")
+let g:project_dir = escape(expand("%:p:h"), ' ')
 
 function! CHANGE_CURR_DIR()
     exec "cd " . g:project_dir
-    let _dir = expand("%:p:h")
+    let _dir = escape(expand("%:p:h"), ' ')
     exec "cd " . _dir
     unlet _dir
 endfunction
