@@ -5,11 +5,11 @@
 
 
 let s:max_buff_height = 30
-let g:project_dir = expand("%:p:h")
+let g:project_dir = escape(expand("%:p:h"), ' ')
 
 function! CHANGE_CURR_DIR()
     exec "cd " . g:project_dir
-    let _dir = expand("%:p:h")
+    let _dir = escape(expand("%:p:h"), ' ')
     exec "cd " . _dir
     unlet _dir
 endfunction
@@ -19,7 +19,7 @@ autocmd BufEnter * call CHANGE_CURR_DIR()
 
 function! Grep(args)
     exec "cd " . g:project_dir
-    let l:find_cmd = "grep --exclude-dir=log --exclude-dir=.git --exclude-dir=coverage --exclude-dir=tmp -rIin '". a:args ."' * | sort"
+    let l:find_cmd = "grep --exclude=./log --exclude=./.git --exclude=./coverage --exclude=./tmp -rIin '". a:args ."' * | sort"
     let l:filelist = split(system(l:find_cmd), '\n')
     if len(l:filelist) == 0
         echo "No files found"
